@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tan_color">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/tan_color"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:id="@+id/numbers"
+            style="@style/CategoryTextViewStyle"
+            android:background="@color/numbers_background"
+            android:text="@string/category_numbers" />
+
+        <TextView
+            android:id="@+id/family_members"
+            style="@style/CategoryTextViewStyle"
+            android:background="@color/family_background"
+            android:text="@string/category_family_members" />
+
+        <TextView
+            android:id="@+id/colors"
+            style="@style/CategoryTextViewStyle"
+            android:background="@color/colors_background"
+            android:text="@string/category_colors" />
+
+        <TextView
+            android:id="@+id/phrases"
+            style="@style/CategoryTextViewStyle"
+            android:background="@color/phrases_background"
+            android:text="@string/category_phrases" />
+
+    </LinearLayout>
+</ScrollView>
