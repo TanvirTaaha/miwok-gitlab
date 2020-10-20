@@ -1,6 +1,7 @@
 package com.example.miwok;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
     /**
      * This refers to the item colors for each category
      */
-    private int mCategoryColorResourceId;
+    private final int mCategoryColorResourceId;
 
     /**
      * This is our own custom constructor (it doesn't mirror a superclass constructor).
@@ -53,6 +54,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View itemView;
+        Word currentWord = this.getItem(position);
 
         // Check if the existing view is being reused, otherwise inflate the view
         if (convertView == null) {
@@ -61,34 +63,57 @@ public class WordAdapter extends ArrayAdapter<Word> {
             itemView = convertView;
         }
 
-        /**
-         * Find the first TextView and miwokTranslation of the item of position position and populate the TextView
+        /*
+          Find the first TextView and miwokTranslation of the item of position position and populate the TextView
          */
-        ((TextView) itemView.findViewById(R.id.item_text_1)).setText(this.getItem(position).getMiwokTranslation());
+        ((TextView) itemView.findViewById(R.id.item_text_1)).setText(currentWord.getMiwokTranslation());
 
-        /**
-         * Find the second TextView and englishTranslation of the item of position position and populate the TextView
+        /*
+          Find the second TextView and englishTranslation of the item of position position and populate the TextView
          */
-        ((TextView) itemView.findViewById(R.id.item_text_2)).setText(this.getItem(position).getEnglishTranslation());
+        ((TextView) itemView.findViewById(R.id.item_text_2)).setText(currentWord.getEnglishTranslation());
 
-        /**
-         * Find the ImageView and iconImageId of the item of position position and populate the ImageView
-         * If no ImageResource has passed to then make the ImageView invisible
+        /*
+          Find the ImageView and iconImageId of the item of position position and populate the ImageView
+          If no ImageResource has passed to then make the ImageView invisible
          */
         if (this.getItem(position).hasImage()) {
-            ((ImageView) itemView.findViewById(R.id.item_image)).setImageResource(this.getItem(position).getImageResourceId());
+            ((ImageView) itemView.findViewById(R.id.item_image)).setImageResource(currentWord.getImageResourceId());
             itemView.findViewById(R.id.item_image).setVisibility(View.VISIBLE);
         } else {
             itemView.findViewById(R.id.item_image).setVisibility(View.GONE);
         }
 
 
-        /**
-         * Populates the Text LinearLayout background with appropriate color
+        /*
+          Populates the Text LinearLayout background with appropriate color
          */
         itemView.findViewById(R.id.item_text_container).setBackgroundColor(ContextCompat.getColor(getContext(), mCategoryColorResourceId));
+
+        // Set OnClickListener with the Text Container LinearLayout
+        itemView.setOnClickListener(v -> play(currentWord.getAudioResourceId(), itemView.findViewById(R.id.talk_icon)));
 
         return itemView;
     }
 
+    private ImageView talkIcon;
+    private MediaPlayer mediaPlayer;
+    private void play(int audioID, ImageView talk) {
+        if (mediaPlayer != null) {
+            stop();
+            talkIcon = talk;
+        }
+        mediaPlayer = MediaPlayer.create(getContext(), audioID);
+        mediaPlayer.setOnCompletionListener(mp -> stop());
+        mediaPlayer.start();
+        talk.setVisibility(View.VISIBLE);
+        talkIcon = talk;
+    }
+    private void stop() {
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        talkIcon.setVisibility(View.GONE);
+    }
 }

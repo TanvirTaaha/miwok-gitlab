@@ -28,15 +28,31 @@
         tools:background="@color/numbers_background"
         tools:ignore="RtlSymmetry">
 
-        <TextView
-            android:id="@+id/item_text_1"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            tools:ignore="RtlSymmetry"
-            tools:text="lutti" />
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+            <TextView
+                android:id="@+id/item_text_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry"
+                tools:text="lutti" />
+            <ImageView
+                android:id="@+id/talk_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/talk_icon"
+                android:visibility="gone" />
+        </LinearLayout>
         <TextView
             android:id="@+id/item_text_2"
             android:layout_width="match_parent"
