@@ -96,6 +96,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
         return itemView;
     }
 
+    // This may not be the ideal way but what to do its complicated but it works
     private ImageView talkIcon;
     private MediaPlayer mediaPlayer;
     private void play(int audioID, ImageView talk) {
