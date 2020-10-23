@@ -96,6 +96,10 @@ public class WordAdapter extends ArrayAdapter<Word> {
         return itemView;
     }
 
+    /*
+     Every Word contains it corresponding audio file id.
+     And WordAdapter configures the items itself to play on click event
+    */
     private ImageView talkIcon;
     private MediaPlayer mediaPlayer;
     private void play(int audioID, ImageView talk) {
