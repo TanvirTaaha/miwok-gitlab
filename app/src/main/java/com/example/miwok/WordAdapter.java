@@ -1,7 +1,6 @@
 package com.example.miwok;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,30 +89,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
          */
         itemView.findViewById(R.id.item_text_container).setBackgroundColor(ContextCompat.getColor(getContext(), mCategoryColorResourceId));
 
-        // Set OnClickListener with the Text Container LinearLayout
-        itemView.setOnClickListener(v -> play(currentWord.getAudioResourceId(), itemView.findViewById(R.id.talk_icon)));
-
         return itemView;
     }
 
-    private ImageView talkIcon;
-    private MediaPlayer mediaPlayer;
-    private void play(int audioID, ImageView talk) {
-        if (mediaPlayer != null) {
-            stop();
-            talkIcon = talk;
-        }
-        mediaPlayer = MediaPlayer.create(getContext(), audioID);
-        mediaPlayer.setOnCompletionListener(mp -> stop());
-        mediaPlayer.start();
-        talk.setVisibility(View.VISIBLE);
-        talkIcon = talk;
-    }
-    private void stop() {
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-        talkIcon.setVisibility(View.GONE);
-    }
 }
