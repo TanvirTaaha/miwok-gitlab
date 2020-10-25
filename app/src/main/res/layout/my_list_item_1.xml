@@ -1,38 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--Layout for a single list item-->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--Layout for a single list item-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_list_item_1"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/list_item_height"
     android:background="@color/tan_color"
-    android:minHeight="@dimen/list_item_height"
-    android:orientation="horizontal">
+    android:minHeight="@dimen/list_item_height">
 
     <ImageView
         android:id="@+id/item_image"
         android:layout_width="@dimen/list_item_height"
         android:layout_height="@dimen/list_item_height"
-        tools:visibility="visible"
+        android:contentDescription="@string/word_image"
         tools:src="@drawable/number_one"
-        android:contentDescription="@string/word_image" />
+        tools:visibility="visible" />
+
     <LinearLayout
         android:id="@+id/item_text_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
+        android:layout_toEndOf="@id/item_image"
+        android:layout_toRightOf="@id/item_image"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingStart="@dimen/left_padding"
-        android:paddingLeft="@dimen/left_padding"
         tools:background="@color/numbers_background"
-        tools:ignore="RtlSymmetry">
+        tools:ignore="RtlHardcoded,RtlSymmetry">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables">
+
             <TextView
                 android:id="@+id/item_text_1"
                 android:layout_width="match_parent"
@@ -42,6 +42,7 @@
                 android:textStyle="bold"
                 tools:ignore="RtlSymmetry"
                 tools:text="lutti" />
+
             <ImageView
                 android:id="@+id/talk_icon"
                 android:layout_width="20dp"
@@ -51,8 +52,10 @@
                 android:layout_marginLeft="8dp"
                 android:contentDescription="@string/todo"
                 android:src="@drawable/talk_icon"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:ignore="RtlHardcoded" />
         </LinearLayout>
+
         <TextView
             android:id="@+id/item_text_2"
             android:layout_width="match_parent"
@@ -62,4 +65,15 @@
             tools:ignore="RtlSymmetry"
             tools:text="one" />
     </LinearLayout>
-</LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/play_icon_dimen"
+        android:layout_height="@dimen/play_icon_dimen"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/left_padding"
+        android:layout_marginRight="@dimen/left_padding"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/ic_baseline_play_arrow_24"
+        tools:ignore="RtlHardcoded" />
+</RelativeLayout>
