@@ -11,23 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity
-            android:name="com.example.miwok.PhrasesActivity"
-            android:label="@string/category_phrases" />
-        <activity
-            android:name="com.example.miwok.ColorsActivity"
-            android:label="@string/category_colors" />
-        <activity
-            android:name="com.example.miwok.FamilyMembersActivity"
-            android:label="@string/category_family_members" />
-        <activity
-            android:name="com.example.miwok.NumbersActivity"
-            android:label="@string/category_numbers" />
-        <activity
-            android:name="com.example.miwok.MainActivity">
+        <activity android:name="com.example.miwok.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -1,34 +1,24 @@
 package com.example.miwok;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
-
-    //Variables
-    TextView numbersTextView;
-    TextView familyMembersTextView;
-    TextView colorsTextView;
-    TextView phrasesTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // instantiation
-        numbersTextView = findViewById(R.id.numbers);
-        familyMembersTextView = findViewById(R.id.family_members);
-        colorsTextView = findViewById(R.id.colors);
-        phrasesTextView = findViewById(R.id.phrases);
+        ViewPager viewPager = findViewById(R.id.viewpager);
+        viewPager.setAdapter(new CategoryAdapter(getSupportFragmentManager(),
+                        FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
 
-        // register buttons to listen on click events
-        numbersTextView.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, NumbersActivity.class)));
-        familyMembersTextView.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, FamilyMembersActivity.class)));
-        colorsTextView.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ColorsActivity.class)));
-        phrasesTextView.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, PhrasesActivity.class)));
+        ((TabLayout) findViewById(R.id.tabs)).setupWithViewPager(viewPager);
     }
 }

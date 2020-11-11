@@ -1,40 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/tan_color">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/tan_color"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
-    <LinearLayout
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/tan_color"
-        android:orientation="vertical"
-        tools:context=".MainActivity">
+        android:background="@color/colorPrimary"
+        app:tabTextColor="@android:color/white"
+        app:tabMode="fixed"/>
 
-        <TextView
-            android:id="@+id/numbers"
-            style="@style/CategoryTextViewStyle"
-            android:background="@color/numbers_background"
-            android:text="@string/category_numbers" />
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/family_members"
-            style="@style/CategoryTextViewStyle"
-            android:background="@color/family_background"
-            android:text="@string/category_family_members" />
-
-        <TextView
-            android:id="@+id/colors"
-            style="@style/CategoryTextViewStyle"
-            android:background="@color/colors_background"
-            android:text="@string/category_colors" />
-
-        <TextView
-            android:id="@+id/phrases"
-            style="@style/CategoryTextViewStyle"
-            android:background="@color/phrases_background"
-            android:text="@string/category_phrases" />
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

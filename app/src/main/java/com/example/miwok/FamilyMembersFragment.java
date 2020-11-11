@@ -4,19 +4,65 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class FamilyMembersActivity extends AppCompatActivity {
+public class FamilyMembersFragment extends Fragment {
 
     private AudioManager mAudioManager;
     private MediaPlayer mMediaPlayer;
     private ImageView talkIcon;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View thisFragmentLayout = inflater.inflate(R.layout.fragment_layout, container, false);
+        // Create and setup the {@link AudioManager} to request audio focus
+        mAudioManager = (AudioManager) Objects.requireNonNull(getActivity()).getSystemService(Context.AUDIO_SERVICE);
+
+        // Create a list of Words
+        final ArrayList<Word> wordArrayList = new ArrayList<>();
+
+        wordArrayList.add(new Word(R.drawable.family_father, "father", "әpә", R.raw.family_father));
+        wordArrayList.add(new Word(R.drawable.family_mother, "mother", "әṭa", R.raw.family_mother));
+        wordArrayList.add(new Word(R.drawable.family_son, "son", "angsi", R.raw.family_son));
+        wordArrayList.add(new Word(R.drawable.family_daughter, "daughter", "tune", R.raw.family_daughter));
+        wordArrayList.add(new Word(R.drawable.family_older_brother, "older brother", "taachi", R.raw.family_older_brother));
+        wordArrayList.add(new Word(R.drawable.family_younger_brother, "younger brother", "chalitti", R.raw.family_younger_brother));
+        wordArrayList.add(new Word(R.drawable.family_older_sister, "older sister", "teṭe", R.raw.family_older_sister));
+        wordArrayList.add(new Word(R.drawable.family_younger_sister, "younger sister", "kolliti", R.raw.family_younger_sister));
+        wordArrayList.add(new Word(R.drawable.family_grandmother, "grandmother", "ama", R.raw.family_grandmother));
+        wordArrayList.add(new Word(R.drawable.family_grandfather, "grandfather", "paapa", R.raw.family_grandfather));
+
+        final WordAdapter itemsAdapter = new WordAdapter(getActivity(), wordArrayList, R.color.family_background);
+
+        final ListView listView = thisFragmentLayout.findViewById(R.id.list);
+
+        listView.setAdapter(itemsAdapter);
+
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            releaseMediaPlayer();
+            talkIcon = view.findViewById(R.id.sound_icon);
+            int result = mAudioManager.requestAudioFocus(mFocusChangeListener, AudioManager.USE_DEFAULT_STREAM_TYPE, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+
+            if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                mMediaPlayer = MediaPlayer.create(getActivity(), wordArrayList.get(position).getAudioResourceId());
+                mMediaPlayer.start();
+                talkIcon.setVisibility(View.VISIBLE);
+                mMediaPlayer.setOnCompletionListener(mp -> releaseMediaPlayer());
+            }
+        });
+        return thisFragmentLayout;
+    }
 
     private final AudioManager.OnAudioFocusChangeListener mFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
@@ -49,49 +95,7 @@ public class FamilyMembersActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_family_members);
-
-        // Create and setup the {@link AudioManager} to request audio focus
-        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-
-        // Create a list of Words
-        final ArrayList<Word> wordArrayList = new ArrayList<>();
-
-        wordArrayList.add(new Word(R.drawable.family_father, "father", "әpә", R.raw.family_father));
-        wordArrayList.add(new Word(R.drawable.family_mother, "mother", "әṭa", R.raw.family_mother));
-        wordArrayList.add(new Word(R.drawable.family_son, "son", "angsi", R.raw.family_son));
-        wordArrayList.add(new Word(R.drawable.family_daughter, "daughter", "tune", R.raw.family_daughter));
-        wordArrayList.add(new Word(R.drawable.family_older_brother, "older brother", "taachi", R.raw.family_older_brother));
-        wordArrayList.add(new Word(R.drawable.family_younger_brother, "younger brother", "chalitti", R.raw.family_younger_brother));
-        wordArrayList.add(new Word(R.drawable.family_older_sister, "older sister", "teṭe", R.raw.family_older_sister));
-        wordArrayList.add(new Word(R.drawable.family_younger_sister, "younger sister", "kolliti", R.raw.family_younger_sister));
-        wordArrayList.add(new Word(R.drawable.family_grandmother, "grandmother", "ama", R.raw.family_grandmother));
-        wordArrayList.add(new Word(R.drawable.family_grandfather, "grandfather", "paapa", R.raw.family_grandfather));
-
-        final WordAdapter itemsAdapter = new WordAdapter(this, wordArrayList, R.color.family_background);
-
-        final ListView listView = findViewById(R.id.family_list);
-
-        listView.setAdapter(itemsAdapter);
-
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            releaseMediaPlayer();
-            talkIcon = view.findViewById(R.id.talk_icon);
-            int result = mAudioManager.requestAudioFocus(mFocusChangeListener, AudioManager.USE_DEFAULT_STREAM_TYPE, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-
-            if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                mMediaPlayer = MediaPlayer.create(FamilyMembersActivity.this, wordArrayList.get(position).getAudioResourceId());
-                mMediaPlayer.start();
-                talkIcon.setVisibility(View.VISIBLE);
-                mMediaPlayer.setOnCompletionListener(mp -> releaseMediaPlayer());
-            }
-        });
-    }
-
-    @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         releaseMediaPlayer();
     }

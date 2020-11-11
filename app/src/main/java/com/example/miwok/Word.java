@@ -40,6 +40,7 @@ public class Word {
 
     /**
      * Determines if an image resources is provided or not
+     *
      * @return a boolean
      */
     public boolean hasImage() {

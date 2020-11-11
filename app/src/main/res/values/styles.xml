@@ -17,10 +17,10 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
-
     </style>
-<!--    <style name="NumbersActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-<!--        -->
-<!--        -->
-<!--    </style>-->
+    <style name="ListViewStyle">
+        <item name="android:background">@color/tan_color</item>
+        <item name="android:divider">@null</item>
+        <item name="android:dividerHeight">0dp</item>
+    </style>
 </resources>
